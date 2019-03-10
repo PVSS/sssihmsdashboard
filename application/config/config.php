@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $servername=filter_input(INPUT_SERVER, 'SERVER_NAME');
 $port=filter_input(INPUT_SERVER, 'SERVER_PORT');
-$config['base_url']	= "http://localhost:8080/ci-chartJS/";
+$config['base_url']	= "/ci-chartJS/";
 
 /*
 |--------------------------------------------------------------------------
