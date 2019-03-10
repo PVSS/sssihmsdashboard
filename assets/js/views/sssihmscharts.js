@@ -35,19 +35,24 @@ var cardOpt = {
   }
 };  
 
-function setAveragePatients(obj){
+function setAverageOutPatients(obj){
     var Data = [];
     var Labels = [];
     var Total = 0;
-    var numMonths = 0;
-    $.each(obj.m_emp, function(key, data){
+    var numMonths = 12;
+    $.each(obj.outpatients, function(key, data){
         Data.push(data.total);
         Labels.push(data.month);
         Total = Number(Total) + Number(data.total);
-        numMonths = numMonths+1;
+        
     });         
-
-    $(".male-employees").html(Math.floor(Total/numMonths));
+    if(Total == 0){
+        $(".out-patients").html(0);
+    }
+    else{
+        $(".out-patients").html(Math.floor(Total/numMonths));
+        
+    }
     // Prepare Json data End
 
     // Prepare Chart Start
@@ -57,7 +62,7 @@ function setAveragePatients(obj){
                 datasets: [
                   {
                       type: 'line',
-                      label: 'Male Employees/Year',
+                      label: 'OutPatients/Month',
                       backgroundColor: $.brandInfo,
                       borderColor: 'rgba(255,255,255,.55)',
                       pointBackgroundColor: $.brandInfo,
@@ -70,26 +75,75 @@ function setAveragePatients(obj){
             },
         options: cardOpt
     };
-    var ChartMaleEmployees = $('#LineMaleEmployees').get(0).getContext('2d');
-    if(typeof chartMaleEmployees != 'undefined' ){
-        chartMaleEmployees.destroy();
+    var ChartOutPatients = $('#LineOutPatients').get(0).getContext('2d');
+    if(typeof chartOutPatients != 'undefined' ){
+        chartOutPatients.destroy();
     }
-    chartMaleEmployees = new Chart(ChartMaleEmployees, config);
+    chartOutPatients = new Chart(ChartOutPatients, config);
     // Prepare Chart End
 }
 
+function setAverageIntPatients(obj){
+    var Data = [];
+    var Labels = [];
+    var Total = 0;
+    var numMonths = 12;
+    $.each(obj.inpatients, function(key, data){
+        Data.push(data.total);
+        Labels.push(data.month);
+        Total = Number(Total) + Number(data.total);
+        
+    });         
+    if(Total == 0){
+        $(".in-patients").html(0);
+    }
+    else{
+        $(".in-patients").html(Math.floor(Total/numMonths));
+        
+    }
+    
+    // Prepare Json data End
 
+    // Prepare Chart Start
+    var config = {
+        type: 'bar',
+        data: {
+                datasets: [
+                  {
+                      type: 'line',
+                      label: 'InPatients/Month',
+                      backgroundColor: $.brandInfo,
+                      borderColor: 'rgba(255,255,255,.55)',
+                      pointBackgroundColor: $.brandInfo,
+                      data: Data,
+                      fill: false,
+                      borderWidth: 1
+                  }
+                ],
+                labels:Labels
+            },
+        options: cardOpt
+    };
+    var ChartInPatients = $('#LineInPatients').get(0).getContext('2d');
+    if(typeof chartInPatients != 'undefined' ){
+        chartInPatients.destroy();
+    }
+    chartInPatients = new Chart(ChartInPatients, config);
+    // Prepare Chart End
+}
 
 function setPatientsByMonth(obj){
-    var DataM = [];
-    var DataF = [];
-    var Labels = [];
-    $.each(obj.m_emp, function(key, data){
-        DataM.push(data.total);
-        Labels.push(data.month);
+    var DataOutPatients = [];
+    var DataInPatients = [];
+    var LabelsOutPatients = [];
+    var LabelsInPatients = [];
+    $.each(obj.outpatients, function(key, data){
+        DataOutPatients.push(data.total);
+        LabelsOutPatients.push(data.month);
     });        
-    $.each(obj.f_emp, function(key, data){
-        DataF.push(data.total);
+    $.each(obj.inpatients, function(key, data){
+        DataInPatients.push(data.total);
+        LabelsInPatients.push(data.month);
     });        
     // Prepare Json data End
 
@@ -127,7 +181,7 @@ function setPatientsByMonth(obj){
               }]
           }
     };    
-    var config = {
+    var configOutPatients = {
         type: 'bar',
         data: {
                 datasets: [
@@ -137,20 +191,47 @@ function setPatientsByMonth(obj){
                       backgroundColor: $.brandInfo,
                       borderColor: $.brandInfo,
                       pointBackgroundColor: $.brandInfo,
-                      data: DataM,
+                      data: DataOutPatients,
                       fill: false,
                       borderWidth: 1
                   }
                 ],
-                labels:Labels
+                labels:LabelsOutPatients
             },
         options: chartOptions
     };
-    var ChartMaleFemaleMain = $('#LineMaleFemaleMain').get(0).getContext('2d');
-    if(typeof chartMaleFemaleMain != 'undefined' ){
-        chartMaleFemaleMain.destroy();
+
+    var configInPatients = {
+        type: 'bar',
+        data: {
+                datasets: [
+                  {
+                      type: 'bar',
+                      label: 'Number of Patients',
+                      backgroundColor: $.brandInfo,
+                      borderColor: $.brandInfo,
+                      pointBackgroundColor: $.brandInfo,
+                      data: DataInPatients,
+                      fill: false,
+                      borderWidth: 1
+                  }
+                ],
+                labels:LabelsInPatients
+            },
+        options: chartOptions
+    };
+    var ChartOutPatientsMain = $('#BarOutPatientsYearly').get(0).getContext('2d');
+    if(typeof chartOutPatientsMain != 'undefined' ){
+        chartOutPatientsMain.destroy();
     }
-    chartMaleFemaleMain = new Chart(ChartMaleFemaleMain, config);
+    chartOutPatientsMain = new Chart(ChartOutPatientsMain, configOutPatients);
+
+    chartOptions['title']['text'] = 'In Patients by Month';
+    var ChartInPatientsMain = $('#BarInPatientsYearly').get(0).getContext('2d');
+    if(typeof chartInPatientsMain != 'undefined' ){
+        chartInPatientsMain.destroy();
+    }
+    chartInPatientsMain = new Chart(ChartInPatientsMain, configInPatients);
     // Prepare Chart End
 }
 
