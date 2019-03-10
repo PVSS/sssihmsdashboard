@@ -18,9 +18,11 @@ class Sssihmsdashboard extends CI_Controller {
     
     public function getAllStats() {
         echo $this->dashboard_qry->getAllStats();
-        #echo "Hello World";
+        
     }
-    
+    public function getAllDropDownOptions(){
+        echo $this->dashboard_qry->getAllDropdownOptions();
+    }
     private function _init_add(){
         $this->data['form'] = array(
            'Year'=> array(
