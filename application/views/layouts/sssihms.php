@@ -62,56 +62,10 @@
 -->
 
 
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">    
-  <header class="app-header navbar">
-    <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item d-md-down-none">
-        <a class="nav-link" href="#">
-            <i class="icon-location-pin"></i>
-            Admin
-        </a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <img src="<?=base_url('assets/img/avatars/Admin.png');?>" class="img-avatar" alt="admin@bootstrapmaster.com">
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <div class="dropdown-header text-center">
-            <strong>Account</strong>
-          </div>
-          <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates</a>
-          <a class="dropdown-item" href="<?=site_url('access/logout');?>"><i class="fa fa-lock"></i> Logout</a>
-        </div>
-      </li>
-    </ul>
-    <button class="navbar-toggler aside-menu-toggler" type="button">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  </header>
+<body >    
 
   <div class="app-body">
-    <div class="sidebar">
-      <nav class="sidebar-nav">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="<?=site_url();?>">
-                <i class="icon-speedometer"></i>
-                Dashboard
-            </a>
-          </li>
-
-        </ul>
-      </nav>
-      <button class="sidebar-minimizer brand-minimizer" type="button"></button>
-    </div>
+    
 
 
 <!--    
@@ -138,7 +92,7 @@
     <main class="main">
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">SSSIHMS Patients Stats Dashboard</li>
       </ol>
       <div class="container-fluid">
           <?php echo $template['body'];?>
@@ -146,30 +100,8 @@
       <!-- /.conainer-fluid -->
     </main>
     
-    <aside class="aside-menu">
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><i class="icon-list"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><i class="icon-speech"></i></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="icon-settings"></i></a>
-        </li>
-      </ul>
-
-    </aside>
   </div>
 
-  <footer class="app-footer">
-    <span>
-        <a href="http://pudyastoadi.dev.php.or.id">PAW!</a> © 2017
-    </span>
-    <span class="ml-auto">
-        Powered by <a href="http://coreui.io">CoreUI</a>
-    </span>
-  </footer>
     <script>
         $(document).ready(function() {
             $('.year').datepicker({

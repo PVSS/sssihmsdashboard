@@ -11,11 +11,16 @@
 
 
                         <select name="Department", id = "dept">
-                            <option >Select A Department</option>
+                            <option >AllDepartments</option>
                         </select>
 
                         <select name="Hospital", id = "hosp">
-                            <option>Select A Hospital</option>
+                            <option>AllHospitals</option>
+                        </select>
+                        <select name="Month", id = "month">
+                            <option>AllMonths</option>
+                            <option>January</option>
+                            <option>February</option>
                         </select>
                     </div>      
                 </div>
@@ -83,6 +88,28 @@
             </div>
         <!--/.col-->
         </div>
+
+        <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                  <i class="fa fa-sitemap"></i> Yearly Trend 
+              </div>
+              <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="col-lg-12">
+                          <div class="chart-wrapper" style="height:250px;" float-right>
+                            <canvas id="YearlyTrend" class="chart" height="250"></canvas>
+                          </div>
+                        </div>
+                    </div>
+                    
+                </div>
+              </div>
+            </div>
+            </div>
+        <!--/.col-->
+        </div>
         
     </div>
     <!--/.row-->
@@ -96,6 +123,8 @@
 var year = document.getElementById("year");
 var hospital = document.getElementById("hosp");
 var dept = document.getElementById("dept");
+var month = document.getElementById("month");
+
 year.onchange = function(){
     getPatientStats();
 }
@@ -103,6 +132,9 @@ hospital.onchange = function(){
     getPatientStats();
 }
 dept.onchange= function(){
+    getPatientStats();
+}
+month.onchange = function(){
     getPatientStats();
 }
 getAllDropDownOptions();
@@ -115,6 +147,7 @@ getAllDropDownOptions();
         var department = document.getElementById("dept");
         var dept_value = department.options[department.selectedIndex].value
         var hosp = document.getElementById("hosp").value;
+        var month = document.getElementById("month").value;
         console.log(year);
 
         $.ajax({
@@ -124,15 +157,18 @@ getAllDropDownOptions();
                     ,"year":year
                     , "department": dept_value
                     , "hospital": hosp
+                    , "month": month
                 },
             
             success: function(resp){  
                 // Prepare Json data Start
+                console.log(resp);
                 var obj = jQuery.parseJSON(resp);
                 
                 setAverageOutPatients(obj);
                 setAverageIntPatients(obj);
                 setPatientsByMonth(obj);
+                setYearlyTrend(obj);
                 
             }
       });
@@ -167,7 +203,7 @@ getAllDropDownOptions();
                     el.value = data.dept;
                     departments.appendChild(el);
                 });
-                departments.selectedIndex = 1;
+                departments.selectedIndex = 0;
 
                 $.each(obj.hospitals, function(key, data){
                     var el = document.createElement("option");
@@ -175,7 +211,7 @@ getAllDropDownOptions();
                     el.value = data.hosp;
                     hospitals.appendChild(el);
                 });
-                hospitals.selectedIndex = 1;
+                hospitals.selectedIndex = 0;
 
                 year.onchange();
             }

@@ -82,7 +82,64 @@ function setAverageOutPatients(obj){
     chartOutPatients = new Chart(ChartOutPatients, config);
     // Prepare Chart End
 }
+function setYearlyTrend(obj){
+    var Data = [];
+    var Labels = [];
+    $.each(obj.yearlycount, function(key,data){
+        Data.push(data.total);
+        Labels.push(data.year);
+    });
 
+      // Prepare Chart Start
+      var yearlychartOptions = {
+        maintainAspectRatio  : false,
+        legend: {
+            display: true,
+            position: 'bottom',
+            fontSize: 18,
+            boxWidth: 20
+        },
+        title: {
+            display: true,
+            text: 'Total Patients Yearly '
+        },
+        chartArea: {
+            backgroundColor: 'rgba(0, 0, 0, 1)'
+        },
+          scales: {
+              xAxes: [{
+                  ticks: {
+                      fontSize: 12
+                  }
+              }]
+          }
+    }; 
+
+    var config = {
+        type: 'bar',
+        data: {
+                datasets: [
+                  {
+                      type: 'line',
+                      label: 'TotalPatients',
+                      backgroundColor: 'rgba(255,255,255,1)',
+                      borderColor: 'rgba(0,0,255,0.55)',
+                      pointBackgroundColor: 'rgba(0,0,255,1)',
+                      data: Data,
+                      fill: false,
+                      borderWidth: 1
+                  }
+                ],
+                labels:Labels
+            },
+        options: yearlychartOptions
+    };
+    var ChartYealyTrend = $('#YearlyTrend').get(0).getContext('2d');
+    if(typeof chartYealyTrend != 'undefined' ){
+        chartYealyTrend.destroy();
+    }
+    chartYealyTrend = new Chart(ChartYealyTrend, config);
+}
 function setAverageIntPatients(obj){
     var Data = [];
     var Labels = [];
@@ -147,6 +204,8 @@ function setPatientsByMonth(obj){
     });        
     // Prepare Json data End
 
+    
+
     // Prepare Chart Start
     var chartOptions = {
         segmentShowStroke    : true,
@@ -208,12 +267,9 @@ function setPatientsByMonth(obj){
                   {
                       type: 'bar',
                       label: 'Number of Patients',
-                      backgroundColor: $.brandInfo,
-                      borderColor: $.brandInfo,
-                      pointBackgroundColor: $.brandInfo,
-                      data: DataInPatients,
-                      fill: false,
-                      borderWidth: 1
+                      backgroundColor: "rgba(255,102,0,0.6)",
+                      borderColor: "rgba(255,102,0,0.6)",
+                      data: DataInPatients
                   }
                 ],
                 labels:LabelsInPatients
